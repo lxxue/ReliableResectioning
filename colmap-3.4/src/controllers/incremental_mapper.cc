@@ -201,7 +201,6 @@ BundleAdjustmentOptions IncrementalMapperOptions::LocalBundleAdjustment()
   options.solver_options.max_linear_solver_iterations = 100;
   options.solver_options.minimizer_progress_to_stdout = false;
   options.solver_options.num_threads = num_threads;
-  options.solver_options.num_linear_solver_threads = num_threads;
   options.print_summary = true;
   options.refine_focal_length = ba_refine_focal_length;
   options.refine_principal_point = ba_refine_principal_point;
@@ -222,7 +221,6 @@ BundleAdjustmentOptions IncrementalMapperOptions::GlobalBundleAdjustment()
   options.solver_options.max_linear_solver_iterations = 100;
   options.solver_options.minimizer_progress_to_stdout = true;
   options.solver_options.num_threads = num_threads;
-  options.solver_options.num_linear_solver_threads = num_threads;
   options.print_summary = true;
   options.refine_focal_length = ba_refine_focal_length;
   options.refine_principal_point = ba_refine_principal_point;
@@ -464,7 +462,7 @@ void IncrementalMapperController::Reconstruct(
 
     while (reg_next_success) {
       mds.SetRegisteredImages(reconstruction.RegImageIds());
-      
+
       BlockIfPaused();
       if (IsStopped()) {
         break;
@@ -483,7 +481,8 @@ void IncrementalMapperController::Reconstruct(
         const image_t next_image_id = next_images[reg_trial];
         const Image& next_image = reconstruction.Image(next_image_id);
 
-        PrintHeading1(StringPrintf("Registering image #%d / %s (%d)", next_image_id, next_image.Name().c_str(),
+        PrintHeading1(StringPrintf("Registering image #%d / %s (%d)",
+                                   next_image_id, next_image.Name().c_str(),
                                    reconstruction.NumRegImages() + 1));
 
         std::cout << StringPrintf("  => Image sees %d / %d points",

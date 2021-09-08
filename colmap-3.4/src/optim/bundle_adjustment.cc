@@ -266,12 +266,8 @@ bool BundleAdjuster::Solve(Reconstruction* reconstruction) {
   if (solver_options.num_threads <= 0) {
     solver_options.num_threads = omp_get_max_threads();
   }
-  if (solver_options.num_linear_solver_threads <= 0) {
-    solver_options.num_linear_solver_threads = omp_get_max_threads();
-  }
 #else
   solver_options.num_threads = 1;
-  solver_options.num_linear_solver_threads = 1;
 #endif
 
   std::string solver_error;
@@ -816,12 +812,8 @@ bool RigBundleAdjuster::Solve(Reconstruction* reconstruction,
   if (solver_options.num_threads <= 0) {
     solver_options.num_threads = omp_get_max_threads();
   }
-  if (solver_options.num_linear_solver_threads <= 0) {
-    solver_options.num_linear_solver_threads = omp_get_max_threads();
-  }
 #else
   solver_options.num_threads = 1;
-  solver_options.num_linear_solver_threads = 1;
 #endif
 
   std::string solver_error;
